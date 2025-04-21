@@ -1,17 +1,18 @@
 import os
 from flask import Flask, render_template, request, jsonify, Blueprint
+from config_manager import ConfigManager
 
 class WebGUI:
     """Class for web-based GUI."""
-    
-    def __init__(self, config_path="config.yaml", 
+
+    def __init__(self, config_path="config.yaml",
                  template_dir="templates",
                  static_dir="static",
                  host="0.0.0.0",
                  port=5000):
         """
         Initialize the web GUI.
-        
+
         Args:
             config_path: Path to configuration file
             template_dir: Directory containing templates
@@ -24,37 +25,38 @@ class WebGUI:
         self.static_dir = static_dir
         self.host = host
         self.port = port
-        
+        self.config_manager = ConfigManager(config_path)
+
         # Create Blueprint for routes
         self.app = Blueprint('huizenzoeker', __name__)
-        
+
         # Register routes
         self.register_routes()
-    
+
     def register_routes(self):
         """Register Flask routes."""
-        
+
         @self.app.route('/')
         def index():
             """Render index page."""
             return render_template('index.html')
-        
+
         @self.app.route('/properties')
         def properties():
             """Render properties page."""
             return render_template('properties.html')
-        
+
         @self.app.route('/settings')
         def settings():
             """Render settings page."""
             return render_template('settings.html')
-        
+
         @self.app.route('/api/properties')
         def api_properties():
             """API endpoint for properties."""
             # This would be connected to the database in a real implementation
             return jsonify({'properties': []})
-        
+
         @self.app.route('/api/settings', methods=['GET', 'POST'])
         def api_settings():
             """API endpoint for settings."""
@@ -62,41 +64,46 @@ class WebGUI:
                 # Save settings
                 settings = request.json
                 try:
-                    with open(self.config_path, 'w') as f:
-                        import json
-                        json.dump(settings, f, indent=2)
-                    return jsonify({'success': True})
+                    # Update config with new settings
+                    for section, values in settings.items():
+                        for key, value in values.items():
+                            self.config_manager.set(section, key, value)
+
+                    # Save config to file
+                    if self.config_manager.save():
+                        return jsonify({'success': True})
+                    else:
+                        return jsonify({'success': False, 'error': 'Failed to save configuration'})
                 except Exception as e:
                     return jsonify({'success': False, 'error': str(e)})
             else:
                 # Load settings
                 try:
-                    if os.path.exists(self.config_path):
-                        with open(self.config_path, 'r') as f:
-                            import json
-                            settings = json.load(f)
-                        return jsonify(settings)
-                    else:
-                        return jsonify({})
+                    return jsonify({
+                        'general': self.config_manager.get('general'),
+                        'filter': self.config_manager.get('filter'),
+                        'telegram': self.config_manager.get('telegram'),
+                        'websites': self.config_manager.get('websites')
+                    })
                 except Exception as e:
-                    return jsonify({})
-        
+                    return jsonify({'error': str(e)})
+
         @self.app.route('/api/run', methods=['POST'])
         def api_run():
             """API endpoint to run scraper manually."""
             # This would trigger the scraper in a real implementation
             return jsonify({'success': True, 'message': 'Scraper gestart'})
-    
+
     def create_template_files(self):
         """Create template files if they don't exist."""
         # Create template directory if it doesn't exist
         os.makedirs(self.template_dir, exist_ok=True)
-        
+
         # Create static directory if it doesn't exist
         os.makedirs(self.static_dir, exist_ok=True)
         os.makedirs(os.path.join(self.static_dir, 'css'), exist_ok=True)
         os.makedirs(os.path.join(self.static_dir, 'js'), exist_ok=True)
-        
+
         # Create index.html
         index_html = """
 <!DOCTYPE html>
@@ -165,7 +172,7 @@ class WebGUI:
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row mt-4">
                             <div class="col-md-12">
                                 <div class="card">
@@ -195,7 +202,7 @@ class WebGUI:
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row mt-4">
                             <div class="col-md-12">
                                 <button id="run-scraper" class="btn btn-primary">Scraper handmatig starten</button>
@@ -212,7 +219,7 @@ class WebGUI:
 </body>
 </html>
         """
-        
+
         # Create properties.html
         properties_html = """
 <!DOCTYPE html>
@@ -296,7 +303,7 @@ class WebGUI:
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
@@ -317,7 +324,7 @@ class WebGUI:
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <div class="pagination-container mt-3 d-flex justify-content-between align-items-center">
                             <div>
                                 <span id="showing-info">Toon 0-0 van 0 woningen</span>
