@@ -16,12 +16,22 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Install Playwright browsers
 RUN playwright install chromium
 
-# Copy application code
-COPY huizenzoeker/ /app/huizenzoeker/
-COPY main.py /app/
+# Create directories
+RUN mkdir -p /app/templates /app/static/css /app/static/js /app/data
 
-# Create directories for templates, static files, and data
-RUN mkdir -p /app/templates /app/static /app/data
+# Copy Python files
+COPY *.py ./
+
+# Copy HTML templates
+COPY *.html /app/templates/
+
+# Copy static files
+COPY *.js /app/static/js/
+COPY *.css /app/static/css/
+
+# Copy other files
+COPY *.txt ./
+COPY *.md ./
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
