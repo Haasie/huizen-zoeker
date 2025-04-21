@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  huizenzoeker:
+    build: .
+    container_name: huizenzoeker
+    volumes:
+      - ./data:/app/data
+      - ./config.yaml:/app/config.yaml
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Amsterdam

@@ -1,0 +1,49 @@
+Bouw een Python-gebaseerde webapplicatie die automatisch meerdere websites van makelaars (zoals funda.nl, jaap.nl, pararius.nl, enz.) periodiek scant op nieuwe of gewijzigde woningaanbiedingen.
+
+Functionele eisen:
+	1.	Web scraping/parsing:
+	•	De app moet HTML-content kunnen ophalen en relevante informatie extraheren zoals:
+	•	adres
+	•	prijs
+	•	woonoppervlakte
+	•	plaats
+	•	directe URL naar de woning
+	•	Ondersteun meerdere makelaarssites via modulariteit (scrapers als plugins).
+	2.	Detectie van nieuwe of gewijzigde woningen:
+	•	Vergelijk nieuwe gegevens met eerder verzamelde data (gebruik een eenvoudige SQLite- of JSON-database).
+	•	Detecteer:
+	•	Nieuwe woningen
+	•	Gewijzigde prijs of status
+	•	Verwijderde woningen (optioneel)
+	3.	Notificatiesysteem:
+	•	Verstuur meldingen bij nieuwe of gewijzigde woningen via:
+	•	Telegram Bot (met support voor Markdown-links en tekst)
+	•	WhatsApp (gebruik Twilio of een andere gateway)
+	•	Notificaties bevatten:
+	•	Adres
+	•	Prijs
+	•	Woningtype
+	•	Link
+	•	Wat is er veranderd?
+	4.	Filtering:
+	•	Ondersteun filters op:
+	•	Plaats (bijv. Rotterdam, Hellevoetsluis, etc.)
+	•	Prijsrange (bijv. €200.000 - €450.000)
+	•	Minimaal aantal m²
+	•	Woningtype (optioneel)
+	5.	Configuratie en uitbreidbaarheid:
+	•	Gebruik een .yaml of .json configuratiebestand voor:
+	•	Lijst van te monitoren makelaars
+	•	Zoekfilters
+	•	Telegram/WhatsApp API keys
+	•	Maak het gemakkelijk om nieuwe websites toe te voegen via losse scraper modules.
+	6.	Planning & logging:
+	•	Laat de app automatisch draaien op een schedule (bijv. elke 30 minuten met cron of APScheduler).
+	•	Log scraping events en meldingen in een logbestand.
+	7.	User interface (optioneel):
+	•	Web UI met overzicht van gevonden woningen en filterinstellingen (gebruik Flask + Jinja2 of Streamlit).
+
+Technische voorkeuren:
+	•	Taal: Python 3.11+
+	•	Libraries: BeautifulSoup of Playwright (voor scraping), SQLite, requests/httpx, APScheduler, python-telegram-bot, dotenv, yaml/json
+	•	Dockerize de app voor eenvoudige deployment.

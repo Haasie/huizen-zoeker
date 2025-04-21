@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instellingen - Huizenzoeker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">Huizenzoeker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="properties.html">Woningen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="settings.html">Instellingen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Instellingen</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="settings-form">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Algemene instellingen</h6>
+                                    <div class="mb-3">
+                                        <label for="interval" class="form-label">Scan interval (minuten)</label>
+                                        <input type="number" class="form-control" id="interval" name="interval" value="30" min="5">
+                                    </div>
+                                    
+                                    <h6 class="mt-4">Filter instellingen</h6>
+                                    <div class="mb-3">
+                                        <label for="min-price" class="form-label">Minimale prijs</label>
+                                        <input type="number" class="form-control" id="min-price" name="min_price" value="100000">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="max-price" class="form-label">Maximale prijs</label>
+                                        <input type="number" class="form-control" id="max-price" name="max_price" value="225000">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="min-area" class="form-label">Minimale oppervlakte (m²)</label>
+                                        <input type="number" class="form-control" id="min-area" name="min_area" value="0">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="cities" class="form-label">Plaatsen (komma-gescheiden)</label>
+                                        <input type="text" class="form-control" id="cities" name="cities" placeholder="Rotterdam, Hellevoetsluis, etc.">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h6>Telegram instellingen</h6>
+                                    <div class="mb-3">
+                                        <label for="telegram-token" class="form-label">Telegram Bot Token</label>
+                                        <input type="text" class="form-control" id="telegram-token" name="telegram_token" value="8169156824:AAG0Nz-OrByEWWjaCaDw6FaLVMCh3_lgnaA">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="telegram-chat-id" class="form-label">Telegram Chat ID</label>
+                                        <input type="text" class="form-control" id="telegram-chat-id" name="telegram_chat_id" placeholder="Vul je Telegram chat ID in">
+                                    </div>
+                                    
+                                    <h6 class="mt-4">Makelaars</h6>
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="klipenvw" name="websites" value="klipenvw" checked>
+                                            <label class="form-check-label" for="klipenvw">
+                                                klipenvw.nl
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="bijdevaate" name="websites" value="bijdevaate" checked>
+                                            <label class="form-check-label" for="bijdevaate">
+                                                bijdevaatemakelaardij.nl
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="ooms" name="websites" value="ooms" checked>
+                                            <label class="form-check-label" for="ooms">
+                                                ooms.com
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="vbrmakelaars" name="websites" value="vbrmakelaars" checked>
+                                            <label class="form-check-label" for="vbrmakelaars">
+                                                vbrmakelaars.nl
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="ruimzicht" name="websites" value="ruimzicht" checked>
+                                            <label class="form-check-label" for="ruimzicht">
+                                                ruimzicht.nl
+                                            </label>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-link" id="select-all-websites">Alles selecteren</button>
+                                        <button type="button" class="btn btn-sm btn-link" id="deselect-all-websites">Alles deselecteren</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary">Instellingen opslaan</button>
+                                    <button type="button" class="btn btn-outline-secondary" id="reset-settings">Reset naar standaard</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

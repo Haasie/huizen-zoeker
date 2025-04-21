@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huizenzoeker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">Huizenzoeker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="properties.html">Woningen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html">Instellingen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Dashboard</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card text-white bg-primary mb-3">
+                                    <div class="card-header">Nieuwe woningen</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="new-count">5</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-white bg-success mb-3">
+                                    <div class="card-header">Gewijzigde woningen</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="updated-count">3</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-white bg-danger mb-3">
+                                    <div class="card-header">Verwijderde woningen</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="removed-count">1</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Recente activiteit</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Datum</th>
+                                                        <th>Type</th>
+                                                        <th>Adres</th>
+                                                        <th>Prijs</th>
+                                                        <th>Actie</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="activity-table">
+                                                    <tr>
+                                                        <td>17-04-2025 08:30</td>
+                                                        <td><span class="badge bg-primary">Nieuw</span></td>
+                                                        <td>Voorbeeldstraat 123, Rotterdam</td>
+                                                        <td>€ 215.000</td>
+                                                        <td><a href="#" class="btn btn-sm btn-outline-primary">Bekijken</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>17-04-2025 08:25</td>
+                                                        <td><span class="badge bg-success">Gewijzigd</span></td>
+                                                        <td>Testlaan 45, Hellevoetsluis</td>
+                                                        <td>€ 189.000</td>
+                                                        <td><a href="#" class="btn btn-sm btn-outline-primary">Bekijken</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>17-04-2025 08:20</td>
+                                                        <td><span class="badge bg-danger">Verwijderd</span></td>
+                                                        <td>Demoweg 67, Rotterdam</td>
+                                                        <td>€ 205.000</td>
+                                                        <td><a href="#" class="btn btn-sm btn-outline-primary">Bekijken</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <button id="run-scraper" class="btn btn-primary">Scraper handmatig starten</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makelaars Beheren - Huizenzoeker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">Huizenzoeker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="properties.html">Woningen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html">Instellingen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="realtors.html">Makelaars</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Makelaars Beheren</h5>
+                        <div>
+                            <button class="btn btn-primary" id="add-realtor-button">Nieuwe Makelaar Toevoegen</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Naam</th>
+                                        <th>Website</th>
+                                        <th>Zoekpagina URL</th>
+                                        <th>Status</th>
+                                        <th>Acties</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="realtors-table">
+                                    <tr>
+                                        <td>Klip & VW</td>
+                                        <td>klipenvw.nl</td>
+                                        <td>https://www.klipenvw.nl/aanbod/woningaanbod/</td>
+                                        <td><span class="badge bg-success">Actief</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary edit-realtor" data-id="klipenvw">Bewerken</button>
+                                            <button class="btn btn-sm btn-outline-danger delete-realtor" data-id="klipenvw">Verwijderen</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bij de Vaate Makelaardij</td>
+                                        <td>bijdevaatemakelaardij.nl</td>
+                                        <td>https://www.bijdevaatemakelaardij.nl/aanbod</td>
+                                        <td><span class="badge bg-success">Actief</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary edit-realtor" data-id="bijdevaate">Bewerken</button>
+                                            <button class="btn btn-sm btn-outline-danger delete-realtor" data-id="bijdevaate">Verwijderen</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ooms Makelaars</td>
+                                        <td>ooms.com</td>
+                                        <td>https://www.ooms.com/woningaanbod</td>
+                                        <td><span class="badge bg-success">Actief</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary edit-realtor" data-id="ooms">Bewerken</button>
+                                            <button class="btn btn-sm btn-outline-danger delete-realtor" data-id="ooms">Verwijderen</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>VBR Makelaars</td>
+                                        <td>vbrmakelaars.nl</td>
+                                        <td>https://www.vbrmakelaars.nl/aanbod</td>
+                                        <td><span class="badge bg-success">Actief</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary edit-realtor" data-id="vbrmakelaars">Bewerken</button>
+                                            <button class="btn btn-sm btn-outline-danger delete-realtor" data-id="vbrmakelaars">Verwijderen</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ruimzicht Makelaardij</td>
+                                        <td>ruimzicht.nl</td>
+                                        <td>https://www.ruimzicht.nl/woningen</td>
+                                        <td><span class="badge bg-success">Actief</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary edit-realtor" data-id="ruimzicht">Bewerken</button>
+                                            <button class="btn btn-sm btn-outline-danger delete-realtor" data-id="ruimzicht">Verwijderen</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Realtor Modal -->
+    <div class="modal fade" id="realtor-modal" tabindex="-1" aria-labelledby="realtor-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="realtor-modal-label">Makelaar Toevoegen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="realtor-form">
+                        <input type="hidden" id="realtor-id">
+                        <div class="mb-3">
+                            <label for="realtor-name" class="form-label">Naam</label>
+                            <input type="text" class="form-control" id="realtor-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="realtor-website" class="form-label">Website</label>
+                            <input type="text" class="form-control" id="realtor-website" required>
+                            <div class="form-text">Bijvoorbeeld: makelaarnaam.nl (zonder www of http://)</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="realtor-search-url" class="form-label">Zoekpagina URL</label>
+                            <input type="url" class="form-control" id="realtor-search-url" required>
+                            <div class="form-text">De URL van de pagina met woningaanbod</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="realtor-listing-selector" class="form-label">CSS Selector voor woninglijst</label>
+                            <input type="text" class="form-control" id="realtor-listing-selector" required>
+                            <div class="form-text">CSS selector om woningen te vinden (bijv. ".property-item" of "#listings .property")</div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="realtor-title-selector" class="form-label">Titel selector</label>
+                                    <input type="text" class="form-control" id="realtor-title-selector">
+                                    <div class="form-text">CSS selector voor de titel/adres</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="realtor-price-selector" class="form-label">Prijs selector</label>
+                                    <input type="text" class="form-control" id="realtor-price-selector">
+                                    <div class="form-text">CSS selector voor de prijs</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="realtor-area-selector" class="form-label">Oppervlakte selector</label>
+                                    <input type="text" class="form-control" id="realtor-area-selector">
+                                    <div class="form-text">CSS selector voor de oppervlakte</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="realtor-rooms-selector" class="form-label">Kamers selector</label>
+                                    <input type="text" class="form-control" id="realtor-rooms-selector">
+                                    <div class="form-text">CSS selector voor het aantal kamers</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="realtor-link-selector" class="form-label">Link selector</label>
+                            <input type="text" class="form-control" id="realtor-link-selector">
+                            <div class="form-text">CSS selector voor de link naar de woningdetailpagina</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="realtor-city-selector" class="form-label">Plaats selector</label>
+                            <input type="text" class="form-control" id="realtor-city-selector">
+                            <div class="form-text">CSS selector voor de plaats/stad</div>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="realtor-active" checked>
+                            <label class="form-check-label" for="realtor-active">Actief</label>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="realtor-notes" class="form-label">Notities</label>
+                            <textarea class="form-control" id="realtor-notes" rows="3"></textarea>
+                            <div class="form-text">Optionele notities over deze makelaar</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+                    <button type="button" class="btn btn-primary" id="save-realtor">Opslaan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delete-modal-label">Makelaar Verwijderen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Weet je zeker dat je deze makelaar wilt verwijderen?</p>
+                    <p>Alle gegevens en instellingen voor deze makelaar zullen permanent worden verwijderd.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+                    <button type="button" class="btn btn-danger" id="confirm-delete">Verwijderen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/realtors.js"></script>
+</body>
+</html>
